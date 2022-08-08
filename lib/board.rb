@@ -1,4 +1,5 @@
 require 'colorize'
+require_relative 'pawn'
 
 #represents a chess board
 class Board
@@ -35,7 +36,19 @@ class Board
       puts @board[i].join('')
     end
   end
+
+  def add_pawns
+    white_pawns = []
+    black_pawns = []
+    (1..8).each do |column|
+      white_pawns << Pawn.new(1, 7, column)
+      black_pawns << Pawn.new(2, 2, column)
+      @board[7][column] = "#{white_pawns[column - 1]}"
+      @board[2][column] = "#{black_pawns[column - 1]}"
+    end
+  end
 end
 
 c = Board.new
+c.add_pawns
 c.display_board

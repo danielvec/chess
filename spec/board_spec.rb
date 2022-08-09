@@ -23,6 +23,16 @@ describe Board do
       expect(middle_square).to receive(:on_white)
       board_color.color_board
     end
-  
   end
+
+  describe '#add_pawns' do
+    subject(:pawn_add) { described_class.new }
+
+    it 'creates 16 new Pawns' do
+      expect(Pawn).to receive(:new).exactly(16).times
+      pawn_add.add_pawns
+    end
+  end
+
+
 end

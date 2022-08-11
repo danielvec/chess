@@ -13,7 +13,7 @@ class Board
               [" 5 ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", " 5 "],
               [" 4 ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", " 4 "],
               [" 3 ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", " 3 "],
-              [" 3 ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", " 3 "],
+              [" 2 ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", " 2 "],
               [" 1 ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", " 1 "],
               ["   ", " A ", " B ", " C ", " D ", " E ", " F ", " G ", " H "]]
     add_pawns
@@ -23,7 +23,7 @@ class Board
     (1..8).each do |column|
       (1..8).each do |row|
         board[row][column] = if row.odd? && column.even? || row.even? && column.odd?
-                                board[row][column].on_white
+                                board[row][column].on_light_blue
                               else
                                 board[row][column].on_blue
                               end
@@ -61,5 +61,3 @@ end
 c = Board.new
 #c.add_pawns
 c.display_board
-puts c.piece_color(2, 2)
-puts c.piece_color(3, 2)

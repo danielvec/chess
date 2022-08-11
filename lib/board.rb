@@ -21,10 +21,10 @@ class Board
   def color_board
     (1..8).each do |column|
       (1..8).each do |row|
-        @board[row][column] = if row.odd? && column.even? || row.even? && column.odd?
-                                @board[row][column].on_white
+        board[row][column] = if row.odd? && column.even? || row.even? && column.odd?
+                                board[row][column].on_white
                               else
-                                @board[row][column].on_blue
+                                board[row][column].on_blue
                               end
       end
     end 
@@ -33,7 +33,7 @@ class Board
   def display_board
     color_board
     (0..9).each do |i|
-      puts @board[i].join('')
+      puts board[i].join('')
     end
   end
 
@@ -43,8 +43,8 @@ class Board
     (1..8).each do |column|
       white_pawns << Pawn.new(1, 7, column)
       black_pawns << Pawn.new(2, 2, column)
-      @board[7][column] = "#{white_pawns[column - 1]}"
-      @board[2][column] = "#{black_pawns[column - 1]}"
+      board[7][column] = "#{white_pawns[column - 1]}"
+      board[2][column] = "#{black_pawns[column - 1]}"
     end
   end
 end

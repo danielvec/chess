@@ -9,7 +9,7 @@ describe Pawn do
     subject(:pawn_display) { described_class.new(1, 2, 2) }
 
       it 'returns white pawn' do
-        white_pawn = " \u265F "
+        white_pawn = " \u265F ".white
         white_display = pawn_display.to_s
         expect(white_display).to eq(white_pawn)
       end

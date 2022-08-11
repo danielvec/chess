@@ -11,7 +11,7 @@ class Pawn
 
   def to_s
     if player == 1
-      " \u265F "
+      " \u265F ".white
     elsif player == 2
       " \u265F ".black
     end

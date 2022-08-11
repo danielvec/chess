@@ -16,7 +16,8 @@ class Board
               [" 3 ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", " 3 "],
               [" 1 ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", " 1 "],
               ["   ", " A ", " B ", " C ", " D ", " E ", " F ", " G ", " H "]]
-  end
+    add_pawns
+    end
 
   def color_board
     (1..8).each do |column|
@@ -58,7 +59,7 @@ class Board
 end
 
 c = Board.new
-c.add_pawns
+#c.add_pawns
 c.display_board
 puts c.piece_color(2, 2)
 puts c.piece_color(3, 2)

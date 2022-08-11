@@ -47,8 +47,18 @@ class Board
       board[2][column] = "#{black_pawns[column - 1]}"
     end
   end
+
+  def piece_color(row, column)
+    if board[row][column].split(";")[1] == "30"
+      "black"
+    elsif board[row][column].split(";")[1] == "37"
+      "white"
+    end
+  end
 end
 
 c = Board.new
 c.add_pawns
 c.display_board
+puts c.piece_color(2, 2)
+puts c.piece_color(3, 2)

@@ -30,9 +30,29 @@ describe Board do
 
     it 'creates 16 new Pawns' do
       expect(Pawn).to receive(:new).exactly(16).times
-      pawn_add.add_pawns
+      pawn_add
     end
   end
 
+  describe '#piece_color' do
+    subject(:color_piece) { described_class.new }
 
+    context 'at the beginning of the game' do
+      it 'returns black for 2nd row pieces' do
+        black_pawn = color_piece.piece_color(2, 2)
+        expect(black_pawn).to eq("black")
+      end
+
+      it 'returns white for 7th row pieces' do
+        white_pawn = color_piece.piece_color(7, 4)
+        expect(white_pawn).to eq("white")
+      end
+
+      it 'does not return white or black for blank spaces' do
+        no_piece = color_piece.piece_color(5, 2)
+        expect(no_piece).to_not eq("black")
+        expect(no_piece).to_not eq("white")
+      end
+    end
+  end
 end

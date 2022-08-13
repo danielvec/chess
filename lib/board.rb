@@ -32,7 +32,6 @@ class Board
   end
 
   def display_board
-    color_board
     (0..9).each do |i|
       puts board[i].join('')
     end
@@ -42,8 +41,8 @@ class Board
     white_pawns = []
     black_pawns = []
     (1..8).each do |column|
-      white_pawns << Pawn.new(1, 7, column)
-      black_pawns << Pawn.new(2, 2, column)
+      white_pawns << Pawn.new(1, 7, column, self)
+      black_pawns << Pawn.new(2, 2, column, self)
       board[7][column] = "#{white_pawns[column - 1]}"
       board[2][column] = "#{black_pawns[column - 1]}"
     end
@@ -56,8 +55,13 @@ class Board
       "white"
     end
   end
+
+  def highlight_space(row, column)
+    board[row][column] = board[row][column].on_red
+  end
 end
 
-c = Board.new
-#c.add_pawns
-c.display_board
+#c = Board.new
+#c.color_board
+#c.highlight_space(5,5)
+#c.display_board

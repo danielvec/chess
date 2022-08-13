@@ -18,9 +18,9 @@ describe Board do
       expect(first_square).to eq(blue)
     end
 
-    it 'sends on_white to fifth row, fourth column' do
+    it 'sends on_light_blue to fifth row, fourth column' do
       middle_square = board_color.board[5][4]
-      expect(middle_square).to receive(:on_white)
+      expect(middle_square).to receive(:on_light_blue)
       board_color.color_board
     end
   end
@@ -53,6 +53,23 @@ describe Board do
         expect(no_piece).to_not eq("black")
         expect(no_piece).to_not eq("white")
       end
+    end
+  end
+
+  describe '#highlight_space' do
+    subject(:space_highlight) { described_class.new }
+  
+    it 'sends on_red to fifth row, fourth column' do
+      middle_square = space_highlight.board[5][4]
+      expect(middle_square).to receive(:on_red)
+      space_highlight.highlight_space(5, 4)
+    end
+
+    it 'returns a red square' do
+      red = "\e[0;39;41m   \e[0m"
+      space_highlight.highlight_space(5, 4)
+      middle_square = space_highlight.board[5][4]
+      expect(middle_square).to eq(red)
     end
   end
 end

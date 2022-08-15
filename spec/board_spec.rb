@@ -72,4 +72,74 @@ describe Board do
       expect(middle_square).to eq(red)
     end
   end
+
+  describe '#selected_pawn' do
+    subject(:pawn_select) { described_class.new }
+  
+    it 'returns the last white pawn in the 7th row' do
+      white_pawns = pawn_select.instance_variable_get(:@white_pawns)
+      pawn_seven = pawn_select.selected_pawn(1, 7, 8)
+      expect(pawn_seven).to eq(white_pawns[7])
+    end
+  end
+
+  describe '#valid_move?' do
+    subject(:move_valid) { described_class.new }
+  
+    context 'when space is highlighted' do
+      before do
+        move_valid.highlight_space(4, 4)
+      end
+
+      it 'is valid move' do
+        expect(move_valid).to be_valid_move(4, 4)
+      end
+    end
+
+    context 'when space is not highlighted' do
+      it 'is not valid move' do
+        expect(move_valid).to_not be_valid_move(4, 4)
+      end
+    end
+  end 
+
+  describe '#move_pawn' do
+    subject(:pawn_move) { described_class.new }
+    let(:white_pawn) { double('pawn', row: 7, column: 4) }
+  
+    before do
+      row = 6
+      column = 4
+      allow(white_pawn).to receive(:update_location).with(row, column)
+      pawn_move.move_pawn(white_pawn, row, column)
+    end
+
+    it "change's pawn's space to blank" do
+      expect(pawn_move.board[7][4]).to eq("   ")
+    end
+
+    it 'adds pawn to new space' do
+      expect(pawn_move.board[6][4]).to eq("#{white_pawn}")
+    end
+  end
+
+  describe '#empty_space?' do
+    subject(:vacant_space) { described_class.new }
+  
+    context 'when in the middle of board at game beginning' do
+      it 'is empty space' do
+        row = 4
+        column = 4
+        expect(vacant_space).to be_empty_space(row, column)
+      end
+    end
+
+    context 'when pawn is in space' do
+      it 'is not empty move' do
+        row = 2
+        column = 2
+        expect(vacant_space).to_not be_empty_space(row, column)
+      end
+    end
+  end 
 end

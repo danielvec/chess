@@ -75,10 +75,11 @@ describe Player do
     subject(:input_validate) { described_class.new("white") }
 
     context 'when given a valid input' do
-      it 'returns valid input' do
+      it 'returns corrected output' do
         valid_input = "B2"
+        corrected_output = [7, 2]
         validated_input = input_validate.validate_input(valid_input)
-        expect(validated_input).to eq("B2")
+        expect(validated_input).to eq(corrected_output)
       end
     end
 
@@ -87,6 +88,43 @@ describe Player do
         invalid_input = "J2"
         validated_input = input_validate.validate_input(invalid_input)
         expect(validated_input).to eq(nil)
+      end
+    end
+  end
+
+  describe "#move_piece" do
+
+    let(:game_board) { double('board') }
+    subject(:piece_move) { described_class.new("white", game_board) }
+
+    context 'when user chooses a valid move' do
+      before do
+        valid_move = [5, 4]
+        allow(piece_move).to receive(:select_square).and_return(valid_move)
+        allow(game_board).to receive(:valid_move?).with(5, 4).and_return(true)
+      end
+
+      it 'stops loop and does not display error message' do
+        error_message = "Invalid move!"
+        expect(piece_move).not_to receive(:puts).with(error_message)
+        piece_move.move_piece
+      end
+    end
+
+    context 'when user chooses an invalid move twice, then a valid move' do
+      before do
+        invalid_move = [4, 2]
+        valid_move = [5, 2]
+        prompt = "Select the space you would like to move to"
+        allow(piece_move).to receive(:puts).with(prompt)
+        allow(piece_move).to receive(:select_square).and_return(invalid_move, invalid_move, valid_move)
+        allow(game_board).to receive(:valid_move?).and_return(false, false, true)
+      end
+
+      it 'stops loop and displays error message twice' do
+        error_message = "Invalid move!"
+        expect(piece_move).to receive(:puts).with(error_message).twice
+        piece_move.move_piece
       end
     end
   end

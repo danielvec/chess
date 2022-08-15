@@ -59,9 +59,38 @@ class Board
   def highlight_space(row, column)
     board[row][column] = board[row][column].on_red
   end
+
+  def selected_pawn(player, row, column)
+    (0..7).each do |i|
+      if player == 1
+        if white_pawns[i].row == row && white_pawns[i].column == column
+          return white_pawns[i]
+        end
+      elsif player == 2
+        if black_pawns[i].row == row && black_pawns[i].column == column
+          return black_pawns[i]
+        end
+      end
+    end
+  end
+
+  def valid_move?(row, column)
+    board[row][column] == board[row][column].on_red
+  end
+
+  def move_pawn(pawn, row, column)
+    board[pawn.row][pawn.column] = "   "
+    board[row][column] = "#{pawn}"
+    pawn.update_location(row, column)
+  end
+
+  def empty_space?(row, column)
+    board[row][column].include? "   "
+  end
 end
 
 #c = Board.new
 #c.color_board
 #c.highlight_space(5,5)
 #c.display_board
+#puts c.possible_moves(7, 2)

@@ -32,7 +32,17 @@ class Player
   def validate_input(input)
     column = input.split('')[0].ord - 64
     row = (input.split('')[1].to_i - 9).abs
-    return input if column.between?(1, 8) && row.between?(1, 8) && valid_piece?(row, column)
+    return row, column if column.between?(1, 8) && row.between?(1, 8)
+  end
+
+  def move_piece
+    loop do
+      puts "Select the space you would like to move to"
+      row, column = select_square
+      return row, column if @board.valid_move?(row, column)
+
+      puts "Invalid move!"
+    end
   end
 
   private
@@ -42,5 +52,5 @@ class Player
   end
 end
 
-#new_player = Player.new("black")
-#new_player.choose_piece
+#new_player = Player.new("white")
+#p new_player.choose_piece

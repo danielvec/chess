@@ -3,7 +3,7 @@ require_relative 'pawn'
 
 #represents a chess board
 class Board
-  attr_accessor :board
+  attr_accessor :board, :white_pawns, :black_pawns
 
   def initialize
     @board = [["   ", " A ", " B ", " C ", " D ", " E ", " F ", " G ", " H "],
@@ -16,6 +16,8 @@ class Board
               [" 2 ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", " 2 "],
               [" 1 ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", " 1 "],
               ["   ", " A ", " B ", " C ", " D ", " E ", " F ", " G ", " H "]]
+    @white_pawns = []
+    @black_pawns = []
     add_pawns
     end
 
@@ -38,11 +40,9 @@ class Board
   end
 
   def add_pawns
-    white_pawns = []
-    black_pawns = []
     (1..8).each do |column|
-      white_pawns << Pawn.new(1, 7, column, self)
-      black_pawns << Pawn.new(2, 2, column, self)
+      @white_pawns << Pawn.new(1, 7, column, self)
+      @black_pawns << Pawn.new(2, 2, column, self)
       board[7][column] = "#{white_pawns[column - 1]}"
       board[2][column] = "#{black_pawns[column - 1]}"
     end

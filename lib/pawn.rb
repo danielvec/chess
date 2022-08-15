@@ -1,11 +1,13 @@
 # represents a pawn chess piece
 class Pawn
-  attr_reader :player
+  attr_reader :player, :board
+  attr_accessor :moves, :row, :column
   
-  def initialize(player, row, column)
+  def initialize(player, row, column, board)
     @player = player
     @row = row
     @column = column
+    @board = board
     @moves = 0
   end
 
@@ -34,4 +36,9 @@ class Pawn
     end
   end
 
+  def update_location(new_row, new_column)
+    self.row = new_row
+    self.column = new_column
+    self.moves += 1
+  end
 end

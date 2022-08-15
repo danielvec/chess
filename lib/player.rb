@@ -12,6 +12,15 @@ class Player
   def choose_piece
     loop do
       puts "Choose the piece you would like to move, letter then number, e.g., B2"
+      row, column = select_square
+      return row, column if valid_piece?(row, column)
+
+      puts "Not a valid piece!"
+    end
+  end
+
+  def select_square
+    loop do
       user_input = gets.capitalize.chomp
       validated_input = validate_input(user_input)
       return validated_input if validated_input

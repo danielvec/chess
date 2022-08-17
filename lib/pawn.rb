@@ -19,15 +19,17 @@ class Pawn
     end
   end
 
-  def move_options
+  def possible_moves
     if player == 1
-      highlight_options(- 1)
+      move_options(- 1)
+      capture_options(- 1)
     elsif player == 2
-      highlight_options(1)
+      move_options(1)
+      capture_options(1)
     end
   end
 
-  def highlight_options(direction)
+  def move_options(direction)
     if board.empty_space?(row + direction, column)
       board.highlight_space(row + direction, column)
       if moves.zero? && board.empty_space?(row + direction + direction, column)
@@ -36,9 +38,28 @@ class Pawn
     end
   end
 
+  def capture_options(direction)
+    if column > 1 && board.piece_color(row + direction, column - 1) == opponent_color
+      board.highlight_space(row + direction, column - 1)
+    end
+    if column < 8 && board.piece_color(row + direction, column + 1) == opponent_color
+      board.highlight_space(row + direction, column + 1)
+    end
+  end
+
   def update_location(new_row, new_column)
     self.row = new_row
     self.column = new_column
     self.moves += 1
+  end
+
+  private
+
+  def opponent_color
+    if player == 1
+      "black"
+    elsif player == 2
+      "white"
+    end
   end
 end

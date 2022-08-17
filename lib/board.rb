@@ -3,7 +3,7 @@ require_relative 'pawn'
 
 #represents a chess board
 class Board
-  attr_accessor :board, :white_pawns, :black_pawns
+  attr_accessor :board, :white_pawns, :black_pawns, :white_captured, :black_captured
 
   def initialize
     @board = [["   ", " A ", " B ", " C ", " D ", " E ", " F ", " G ", " H "],
@@ -19,7 +19,9 @@ class Board
     @white_pawns = []
     @black_pawns = []
     add_pawns
-    end
+    @white_captured = []
+    @black_captured = []
+  end
 
   def color_board
     (1..8).each do |column|
@@ -34,9 +36,11 @@ class Board
   end
 
   def display_board
+    puts "captured: #{white_captured}".white.on_light_cyan
     (0..9).each do |i|
       puts board[i].join('')
     end
+    puts "captured: #{black_captured}".black.on_light_cyan
   end
 
   def add_pawns
@@ -79,9 +83,18 @@ class Board
   end
 
   def move_pawn(pawn, row, column)
+    add_captured(row, column) unless empty_space?(row, column)
     board[pawn.row][pawn.column] = "   "
     board[row][column] = "#{pawn}"
     pawn.update_location(row, column)
+  end
+
+  def add_captured(row, column)
+    if piece_color(row, column) == "black"
+      black_captured << board[row][column].split[1]
+    elsif piece_color(row, column) == "white"
+      white_captured << board[row][column].split[1]
+    end
   end
 
   def empty_space?(row, column)

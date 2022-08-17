@@ -28,7 +28,7 @@ describe Pawn do
     end
   end
 
-  describe "#highlight_options" do
+  describe "#move_options" do
     
     let(:game_board) { double('board') }
     subject(:highlight_moves) { described_class.new(1, 2, 2, game_board) }
@@ -40,7 +40,7 @@ describe Pawn do
 
       it 'sends highlight space to board twice' do
         expect(game_board).to receive(:highlight_space).twice
-        highlight_moves.highlight_options(1)
+        highlight_moves.move_options(1)
       end
     end
 
@@ -52,7 +52,7 @@ describe Pawn do
 
       it 'sends highlight space to board once' do
         expect(game_board).to receive(:highlight_space).once
-        highlight_moves.highlight_options(1)
+        highlight_moves.move_options(1)
       end
     end
 
@@ -64,7 +64,38 @@ describe Pawn do
 
       it 'does not send highlight space to board' do
         expect(game_board).not_to receive(:highlight_space)
-        highlight_moves.highlight_options(1)
+        highlight_moves.move_options(1)
+      end
+    end
+  end
+
+  describe "#capture_options" do
+    
+    let(:game_board) { double('board') }
+    subject(:highlight_captures) { described_class.new(1, 7, 2, game_board) }
+
+    context "when there is an opponent piece one space forward diagonally" do
+      before do
+        allow(game_board).to receive(:piece_color).with(6, 1).and_return("white")
+        allow(game_board).to receive(:piece_color).with(6, 3).and_return("black")
+      end
+
+      it 'sends highlight space to board once' do
+        expect(game_board).to receive(:highlight_space).once
+        highlight_captures.capture_options(-1)
+      end
+    end
+
+
+    context "when there are two opponent pieces one space forward diagonally" do
+      before do
+        allow(game_board).to receive(:piece_color).with(6, 1).and_return("black")
+        allow(game_board).to receive(:piece_color).with(6, 3).and_return("black")
+      end
+
+      it 'sends highlight space to board twice' do
+        expect(game_board).to receive(:highlight_space).twice
+        highlight_captures.capture_options(-1)
       end
     end
   end

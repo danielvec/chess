@@ -123,6 +123,18 @@ describe Board do
     end
   end
 
+  describe '#add_captured' do
+    subject(:captures) { described_class.new }
+
+    context 'when a black pawn is captured' do
+      it 'sends a pawn to black_captured' do
+        pawn = "\u265F"
+        captures.add_captured(2, 2)
+        expect(captures.black_captured[0]).to eq(pawn)
+      end
+    end
+  end
+
   describe '#empty_space?' do
     subject(:vacant_space) { described_class.new }
   

@@ -1,5 +1,6 @@
 require 'colorize'
 require_relative 'pawn'
+require_relative 'rook'
 
 #represents a chess board
 class Board
@@ -21,6 +22,7 @@ class Board
     @white_captured = []
     @black_captured = []
     add_pawns
+    add_rooks
   end
 
   def color_board
@@ -52,6 +54,15 @@ class Board
     end
   end
 
+  def add_rooks
+    @white_pieces << Rook.new(1, 8, 1, self) << Rook.new(1, 8, 8, self) 
+    @black_pieces << Rook.new(2, 1, 1, self) << Rook.new(2, 1, 8, self)
+    board[8][1] = "#{white_pieces[8]}"
+    board[8][8] = "#{white_pieces[9]}"
+    board[1][1] = "#{black_pieces[8]}"
+    board[1][8] = "#{black_pieces[9]}"
+  end
+  
   def piece_color(row, column)
     if board[row][column].split(";")[1] == "30"
       "black"

@@ -11,10 +11,10 @@ describe Board do
       board_color.color_board
     end
 
-    it 'returns a blue first square' do
+    it 'returns a blue first square in third row' do
       blue = "\e[0;39;44m   \e[0m"
       board_color.color_board
-      first_square = board_color.board[1][1]
+      first_square = board_color.board[3][1]
       expect(first_square).to eq(blue)
     end
 
@@ -73,13 +73,13 @@ describe Board do
     end
   end
 
-  describe '#selected_pawn' do
-    subject(:pawn_select) { described_class.new }
+  describe '#selected_piece' do
+    subject(:piece_select) { described_class.new }
   
     it 'returns the last white pawn in the 7th row' do
-      white_pawns = pawn_select.instance_variable_get(:@white_pawns)
-      pawn_seven = pawn_select.selected_pawn(1, 7, 8)
-      expect(pawn_seven).to eq(white_pawns[7])
+      white_pieces = piece_select.instance_variable_get(:@white_pieces)
+      pawn_seven = piece_select.selected_piece(1, 7, 8)
+      expect(pawn_seven).to eq(white_pieces[7])
     end
   end
 
@@ -103,23 +103,23 @@ describe Board do
     end
   end 
 
-  describe '#move_pawn' do
-    subject(:pawn_move) { described_class.new }
+  describe '#move_piece' do
+    subject(:piece_move) { described_class.new }
     let(:white_pawn) { double('pawn', row: 7, column: 4) }
   
     before do
       row = 6
       column = 4
       allow(white_pawn).to receive(:update_location).with(row, column)
-      pawn_move.move_pawn(white_pawn, row, column)
+      piece_move.move_piece(white_pawn, row, column)
     end
 
     it "change's pawn's space to blank" do
-      expect(pawn_move.board[7][4]).to eq("   ")
+      expect(piece_move.board[7][4]).to eq("   ")
     end
 
     it 'adds pawn to new space' do
-      expect(pawn_move.board[6][4]).to eq("#{white_pawn}")
+      expect(piece_move.board[6][4]).to eq("#{white_pawn}")
     end
   end
 

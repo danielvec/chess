@@ -16,11 +16,11 @@ class Game
 
   def player_one_turn
     chosen_piece = @player_one.choose_piece
-    selected_piece = @board.selected_pawn(1, chosen_piece[0], chosen_piece[1])
+    selected_piece = @board.selected_piece(1, chosen_piece[0], chosen_piece[1])
     selected_piece.possible_moves
     @board.display_board
     chosen_space = @player_one.move_piece
-    @board.move_pawn(selected_piece, chosen_space[0], chosen_space[1])
+    @board.move_piece(selected_piece, chosen_space[0], chosen_space[1])
     @board.color_board
     @board.display_board
     player_two_turn
@@ -28,11 +28,11 @@ class Game
 
   def player_two_turn
     chosen_piece = @player_two.choose_piece
-    selected_piece = @board.selected_pawn(2, chosen_piece[0], chosen_piece[1])
+    selected_piece = @board.selected_piece(2, chosen_piece[0], chosen_piece[1])
     selected_piece.possible_moves
     @board.display_board
     chosen_space = @player_two.move_piece
-    @board.move_pawn(selected_piece, chosen_space[0], chosen_space[1])
+    @board.move_piece(selected_piece, chosen_space[0], chosen_space[1])
     @board.color_board
     @board.display_board
     player_one_turn

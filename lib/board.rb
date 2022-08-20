@@ -3,7 +3,7 @@ require_relative 'pawn'
 
 #represents a chess board
 class Board
-  attr_accessor :board, :white_pawns, :black_pawns, :white_captured, :black_captured
+  attr_accessor :board, :white_pieces, :black_pieces, :white_captured, :black_captured
 
   def initialize
     @board = [["   ", " A ", " B ", " C ", " D ", " E ", " F ", " G ", " H "],
@@ -16,11 +16,11 @@ class Board
               [" 2 ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", " 2 "],
               [" 1 ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", " 1 "],
               ["   ", " A ", " B ", " C ", " D ", " E ", " F ", " G ", " H "]]
-    @white_pawns = []
-    @black_pawns = []
-    add_pawns
+    @white_pieces = []
+    @black_pieces = []
     @white_captured = []
     @black_captured = []
+    add_pawns
   end
 
   def color_board
@@ -45,10 +45,10 @@ class Board
 
   def add_pawns
     (1..8).each do |column|
-      @white_pawns << Pawn.new(1, 7, column, self)
-      @black_pawns << Pawn.new(2, 2, column, self)
-      board[7][column] = "#{white_pawns[column - 1]}"
-      board[2][column] = "#{black_pawns[column - 1]}"
+      @white_pieces << Pawn.new(1, 7, column, self)
+      @black_pieces << Pawn.new(2, 2, column, self)
+      board[7][column] = "#{white_pieces[column - 1]}"
+      board[2][column] = "#{black_pieces[column - 1]}"
     end
   end
 
@@ -64,15 +64,15 @@ class Board
     board[row][column] = board[row][column].on_red
   end
 
-  def selected_pawn(player, row, column)
-    (0..7).each do |i|
+  def selected_piece(player, row, column)
+    (0..9).each do |i|
       if player == 1
-        if white_pawns[i].row == row && white_pawns[i].column == column
-          return white_pawns[i]
+        if white_pieces[i].row == row && white_pieces[i].column == column
+          return white_pieces[i]
         end
       elsif player == 2
-        if black_pawns[i].row == row && black_pawns[i].column == column
-          return black_pawns[i]
+        if black_pieces[i].row == row && black_pieces[i].column == column
+          return black_pieces[i]
         end
       end
     end
@@ -82,11 +82,11 @@ class Board
     board[row][column] == board[row][column].on_red
   end
 
-  def move_pawn(pawn, row, column)
+  def move_piece(piece, row, column)
     add_captured(row, column) unless empty_space?(row, column)
-    board[pawn.row][pawn.column] = "   "
-    board[row][column] = "#{pawn}"
-    pawn.update_location(row, column)
+    board[piece.row][piece.column] = "   "
+    board[row][column] = "#{piece}"
+    piece.update_location(row, column)
   end
 
   def add_captured(row, column)

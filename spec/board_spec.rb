@@ -34,6 +34,15 @@ describe Board do
     end
   end
 
+  describe '#add_rooks' do
+    subject(:rook_add) { described_class.new }
+
+    it 'creates 4 new Rooks' do
+      expect(Rook).to receive(:new).exactly(4).times
+      rook_add
+    end
+  end
+
   describe '#piece_color' do
     subject(:color_piece) { described_class.new }
 

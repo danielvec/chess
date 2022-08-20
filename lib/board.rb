@@ -1,6 +1,7 @@
 require 'colorize'
 require_relative 'pawn'
 require_relative 'rook'
+require_relative 'bishop'
 
 #represents a chess board
 class Board
@@ -23,6 +24,7 @@ class Board
     @black_captured = []
     add_pawns
     add_rooks
+    add_bishops
   end
 
   def color_board
@@ -62,6 +64,15 @@ class Board
     board[1][1] = "#{black_pieces[8]}"
     board[1][8] = "#{black_pieces[9]}"
   end
+
+  def add_bishops
+    @white_pieces << Bishop.new(1, 8, 3, self) << Bishop.new(1, 8, 6, self)
+    @black_pieces << Bishop.new(2, 1, 3, self) << Bishop.new(2, 1, 6, self)
+    board[8][3] = "#{white_pieces[10]}"
+    board[8][6] = "#{white_pieces[11]}"
+    board[1][3] = "#{black_pieces[10]}"
+    board[1][6] = "#{black_pieces[11]}"
+  end
   
   def piece_color(row, column)
     if board[row][column].split(";")[1] == "30"
@@ -76,7 +87,7 @@ class Board
   end
 
   def selected_piece(player, row, column)
-    (0..9).each do |i|
+    (0..11).each do |i|
       if player == 1
         if white_pieces[i].row == row && white_pieces[i].column == column
           return white_pieces[i]

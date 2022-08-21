@@ -43,6 +43,24 @@ describe Board do
     end
   end
 
+  describe '#add_bishops' do
+    subject(:bishop_add) { described_class.new }
+
+    it 'creates 4 new Bishops' do
+      expect(Bishop).to receive(:new).exactly(4).times
+      bishop_add
+    end
+  end
+
+  describe '#add_knights' do
+    subject(:knight_add) { described_class.new }
+
+    it 'creates 4 new Knights' do
+      expect(Rook).to receive(:new).exactly(4).times
+      knight_add
+    end
+  end
+
   describe '#piece_color' do
     subject(:color_piece) { described_class.new }
 
@@ -143,6 +161,26 @@ describe Board do
       end
     end
   end
+
+  describe '#valid_space?' do
+    subject(:space_valid) { described_class.new }
+  
+    context 'when row and column are between 1 and 8' do
+      it 'is valid space' do
+        row = 4
+        column = 4
+        expect(space_valid).to be_valid_space(row, column)
+      end
+    end
+
+    context 'when row and column are not between 1 and 8' do
+      it 'is not valid space' do
+        row = 0
+        column = 10
+        expect(space_valid).to_not be_valid_space(row, column)
+      end
+    end
+  end 
 
   describe '#empty_space?' do
     subject(:vacant_space) { described_class.new }

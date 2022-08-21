@@ -4,6 +4,7 @@ require_relative 'rook'
 require_relative 'bishop'
 require_relative 'knight'
 require_relative 'queen'
+require_relative 'king'
 
 #represents a chess board
 class Board
@@ -29,6 +30,7 @@ class Board
     add_bishops
     add_knights
     add_queens
+    add_kings
   end
 
   def color_board
@@ -93,6 +95,13 @@ class Board
     board[8][4] = "#{white_pieces[14]}"
     board[1][4] = "#{black_pieces[14]}"
   end
+
+  def add_kings
+    @white_pieces << King.new(1, 8, 5, self)
+    @black_pieces << King.new(2, 1, 5, self)
+    board[8][5] = "#{white_pieces[15]}"
+    board[1][5] = "#{black_pieces[15]}"
+  end
   
   def piece_color(row, column)
     if board[row][column].split(";")[1] == "30"
@@ -107,7 +116,7 @@ class Board
   end
 
   def selected_piece(player, row, column)
-    (0..14).each do |i|
+    (0..15).each do |i|
       if player == 1
         if white_pieces[i].row == row && white_pieces[i].column == column
           return white_pieces[i]

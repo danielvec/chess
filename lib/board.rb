@@ -2,6 +2,7 @@ require 'colorize'
 require_relative 'pawn'
 require_relative 'rook'
 require_relative 'bishop'
+require_relative 'knight'
 
 #represents a chess board
 class Board
@@ -25,16 +26,17 @@ class Board
     add_pawns
     add_rooks
     add_bishops
+    add_knights
   end
 
   def color_board
     (1..8).each do |column|
       (1..8).each do |row|
         board[row][column] = if row.odd? && column.even? || row.even? && column.odd?
-                                board[row][column].on_light_blue
-                              else
-                                board[row][column].on_blue
-                              end
+                               board[row][column].on_light_blue
+                             else
+                               board[row][column].on_blue
+                             end
       end
     end 
   end
@@ -73,6 +75,15 @@ class Board
     board[1][3] = "#{black_pieces[10]}"
     board[1][6] = "#{black_pieces[11]}"
   end
+
+  def add_knights
+    @white_pieces << Knight.new(1, 8, 2, self) << Knight.new(1, 8, 7, self)
+    @black_pieces << Knight.new(2, 1, 2, self) << Knight.new(2, 1, 7, self)
+    board[8][2] = "#{white_pieces[12]}"
+    board[8][7] = "#{white_pieces[13]}"
+    board[1][2] = "#{black_pieces[12]}"
+    board[1][7] = "#{black_pieces[13]}"
+  end
   
   def piece_color(row, column)
     if board[row][column].split(";")[1] == "30"
@@ -87,7 +98,7 @@ class Board
   end
 
   def selected_piece(player, row, column)
-    (0..11).each do |i|
+    (0..13).each do |i|
       if player == 1
         if white_pieces[i].row == row && white_pieces[i].column == column
           return white_pieces[i]

@@ -130,6 +130,10 @@ class Board
     end
   end
 
+  def valid_space?(row, column)
+    row.between?(1, 8) && column.between?(1, 8)
+  end
+
   def empty_space?(row, column)
     board[row][column].include? "   "
   end

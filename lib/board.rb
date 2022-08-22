@@ -135,9 +135,17 @@ class Board
 
   def move_piece(piece, row, column)
     add_captured(row, column) unless empty_space?(row, column)
+    piece.previous_location(piece.row, piece.column)
     board[piece.row][piece.column] = "   "
     board[row][column] = "#{piece}"
     piece.update_location(row, column)
+  end
+
+  def undo_move(piece)
+    if defined? piece.moves
+      piece.adjust_move_count(-2)
+    end
+    move_piece(piece, piece.previous_row, piece.previous_column)
   end
 
   def add_captured(row, column)

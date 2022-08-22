@@ -137,6 +137,7 @@ describe Board do
     before do
       row = 6
       column = 4
+      allow(white_pawn).to receive(:previous_location)
       allow(white_pawn).to receive(:update_location).with(row, column)
       piece_move.move_piece(white_pawn, row, column)
     end
@@ -147,6 +148,22 @@ describe Board do
 
     it 'adds pawn to new space' do
       expect(piece_move.board[6][4]).to eq("#{white_pawn}")
+    end
+  end
+
+  describe '#undo_move' do
+    subject(:move_undo) { described_class.new }
+    let(:white_pawn) { double('pawn', row: 6, column: 4, moves: 1) }
+  
+    before do
+      allow(white_pawn).to receive(:previous_row)
+      allow(white_pawn).to receive(:previous_column)
+      allow(move_undo).to receive(:move_piece)
+    end
+
+    it "sends adjust_move_count to piece" do
+      expect(white_pawn).to receive(:adjust_move_count).with(-2).once
+      move_undo.undo_move(white_pawn)
     end
   end
 

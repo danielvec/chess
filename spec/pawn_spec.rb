@@ -100,6 +100,38 @@ describe Pawn do
     end
   end
 
+  describe "#previous_location" do
+    
+    let(:game_board) { double('board') }
+    subject(:pawn_previous) { described_class.new(1, 2, 2, game_board) }
+
+    before do
+      pawn_previous.previous_location(2, 3)
+    end
+
+    it 'updates column to 3' do
+      column = pawn_previous.previous_column
+      expect(column).to eq(3)
+    end
+  end
+
+  describe "#adjust_move_count" do
+    
+    let(:game_board) { double('board') }
+    subject(:adjust_moves) { described_class.new(1, 2, 2, game_board) }
+
+    before do
+      adjust_moves.moves = 3
+      change = -2
+      adjust_moves.adjust_move_count(change)
+    end
+
+    it 'adjusts moves to 1' do
+      moves = adjust_moves.moves
+      expect(moves).to eq(1)
+    end
+  end
+
   describe "#update_location" do
     
     let(:game_board) { double('board') }

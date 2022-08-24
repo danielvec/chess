@@ -282,6 +282,21 @@ describe King do
       end
   end
 
+  describe "#previous_location" do
+    
+    let(:game_board) { double('board') }
+    subject(:king_previous) { described_class.new(1, 2, 2, game_board) }
+
+    before do
+      king_previous.previous_location(2, 3)
+    end
+
+    it 'updates column to 3' do
+      column = king_previous.previous_column
+      expect(column).to eq(3)
+    end
+  end
+
   describe "#update_location" do
     
     let(:game_board) { double('board') }

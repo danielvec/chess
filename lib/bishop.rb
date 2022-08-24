@@ -1,13 +1,15 @@
 # represents a bishop chess piece
 class Bishop
   attr_reader :player, :board
-  attr_accessor :row, :column
+  attr_accessor :row, :column, :previous_row, :previous_column
 
   def initialize(player, row, column, board)
     @player = player
     @row = row
     @column = column
     @board = board
+    @previous_row = nil
+    @previous_column = nil
   end
 
   def to_s
@@ -51,6 +53,11 @@ class Bishop
       board.highlight_space(new_row + 1, new_column - 1)
       move_down_left(new_row + 1, new_column - 1) unless opponent_piece?(new_row + 1, new_column - 1)
     end
+  end
+
+  def previous_location(row, column)
+    self.previous_row = row
+    self.previous_column = column
   end
   
   def update_location(new_row, new_column)

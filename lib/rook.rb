@@ -1,13 +1,15 @@
 # represents a rook chess piece
 class Rook
   attr_reader :player, :board
-  attr_accessor :row, :column
+  attr_accessor :row, :column, :previous_row, :previous_column
   
   def initialize(player, row, column, board)
     @player = player
     @row = row
     @column = column
     @board = board
+    @previous_row = nil
+    @previous_column = nil
   end
 
   def to_s
@@ -53,6 +55,11 @@ class Rook
     end
   end
 
+  def previous_location(row, column)
+    self.previous_row = row
+    self.previous_column = column
+  end
+  
   def update_location(new_row, new_column)
     self.row = new_row
     self.column = new_column

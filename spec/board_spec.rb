@@ -181,7 +181,7 @@ describe Board do
 
   describe '#valid_space?' do
     subject(:space_valid) { described_class.new }
-  
+
     context 'when row and column are between 1 and 8' do
       it 'is valid space' do
         row = 4
@@ -197,7 +197,7 @@ describe Board do
         expect(space_valid).to_not be_valid_space(row, column)
       end
     end
-  end 
+  end
 
   describe '#empty_space?' do
     subject(:vacant_space) { described_class.new }
@@ -216,6 +216,38 @@ describe Board do
         column = 2
         expect(vacant_space).to_not be_empty_space(row, column)
       end
+    end
+  end
+
+  describe '#highlight_black_moves' do
+    subject(:moves_highlight) { described_class.new }
+  
+    it 'sends possible_moves to first black piece' do
+      black_pieces = moves_highlight.instance_variable_get(:@black_pieces)
+      expect(black_pieces[0]).to receive(:possible_moves).once
+      moves_highlight.highlight_black_moves
+    end
+
+    it 'sends possible_moves to last black piece' do
+      black_pieces = moves_highlight.instance_variable_get(:@black_pieces)
+      expect(black_pieces[15]).to receive(:possible_moves).once
+      moves_highlight.highlight_black_moves
+    end
+  end 
+
+  describe '#highlight_white_moves' do
+    subject(:moves_highlight) { described_class.new }
+  
+    it 'sends possible_moves to first white piece' do
+      white_pieces = moves_highlight.instance_variable_get(:@white_pieces)
+      expect(white_pieces[0]).to receive(:possible_moves).once
+      moves_highlight.highlight_white_moves
+    end
+
+    it 'sends possible_moves to last white piece' do
+      white_pieces = moves_highlight.instance_variable_get(:@white_pieces)
+      expect(white_pieces[15]).to receive(:possible_moves).once
+      moves_highlight.highlight_white_moves
     end
   end 
 end

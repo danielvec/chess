@@ -142,7 +142,7 @@ class Board
   end
 
   def undo_move(piece)
-    if defined? piece.moves
+    if defined? piece.move_count
       piece.adjust_move_count(-2)
     end
     move_piece(piece, piece.previous_row, piece.previous_column)
@@ -150,9 +150,13 @@ class Board
 
   def add_captured(row, column)
     if piece_color(row, column) == "black"
-      black_captured << board[row][column].split[1]
+      captured = selected_piece(2, row, column)
+      captured.deactivate
+      black_captured << captured.to_s.split[1]
     elsif piece_color(row, column) == "white"
-      white_captured << board[row][column].split[1]
+      captured = selected_piece(1, row, column)
+      captured.deactivate
+      white_captured << captured.to_s.split[1]
     end
   end
 

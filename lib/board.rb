@@ -163,10 +163,16 @@ class Board
   def empty_space?(row, column)
     board[row][column].include? "   "
   end
-end
 
-#c = Board.new
-#c.color_board
-#c.highlight_space(5,5)
-#c.display_board
-#puts c.possible_moves(7, 2)
+  def highlight_black_moves(pieces = 16)
+    (0..(pieces - 1)).each do |i|
+      black_pieces[i].possible_moves if black_pieces[i].active?
+    end
+  end
+
+  def highlight_white_moves(pieces = 16)
+    (0..(pieces - 1)).each do |i|
+      white_pieces[i].possible_moves if white_pieces[i].active?
+    end
+  end
+end

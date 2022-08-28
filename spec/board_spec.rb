@@ -153,7 +153,7 @@ describe Board do
 
   describe '#undo_move' do
     subject(:move_undo) { described_class.new }
-    let(:white_pawn) { double('pawn', row: 6, column: 4, moves: 1) }
+    let(:white_pawn) { double('pawn', row: 6, column: 4, move_count: 1) }
   
     before do
       allow(white_pawn).to receive(:previous_row)
@@ -169,8 +169,15 @@ describe Board do
 
   describe '#add_captured' do
     subject(:captures) { described_class.new }
+    let(:black_pawn) { double('pawn', row: 2, column: 2) }
 
     context 'when a black pawn is captured' do
+      it 'sends deactivate to pawn' do
+        allow(captures).to receive(:selected_piece).and_return(black_pawn)
+        expect(black_pawn).to receive(:deactivate)
+        captures.add_captured(2, 2)
+      end
+
       it 'sends a pawn to black_captured' do
         pawn = "\u265F"
         captures.add_captured(2, 2)

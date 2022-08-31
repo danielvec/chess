@@ -22,16 +22,68 @@ class Knight
     end
   end
 
-  def possible_moves
-    move_options = [[1, 2], [1, -2], [2, 1], [2, -1], [-1, 2], [-1, -2], [-2, 1], [-2, -1]]
-    (0..7).each do |i|
-      move(move_options[i][0], move_options[i][1])
-    end
+  def moves
+    [method(:up_right_right), method(:up_left_left), method(:down_right_right),
+     method(:down_left_left), method(:up_up_right), method(:up_up_left),
+     method(:down_down_right), method(:down_down_left)]
   end
 
-  def move(row_direction, column_direction)
-    if viable_move?(row + row_direction, column + column_direction)
-      board.highlight_space(row + row_direction, column + column_direction)
+  def possible_moves
+    up_right_right
+    up_left_left
+    down_right_right
+    down_left_left
+    up_up_right
+    up_up_left
+    down_down_left
+    down_down_right
+  end
+
+  def up_up_right(new_row = row, new_column = column)
+    if viable_move?(new_row + 2, new_column + 1)
+      board.highlight_space(new_row + 2, new_column + 1)
+    end  
+  end
+  
+  def up_up_left(new_row = row, new_column = column)
+    if viable_move?(new_row + 2, new_column -1)
+      board.highlight_space(new_row + 2, new_column - 1)
+    end
+  end
+  
+  def down_down_right(new_row = row, new_column = column)
+    if viable_move?(new_row - 2, new_column + 1)
+      board.highlight_space(new_row - 2, new_column + 1)
+    end
+  end
+  
+  def down_down_left(new_row = row, new_column = column)
+    if viable_move?(new_row - 2, new_column - 1)
+      board.highlight_space(new_row - 2, new_column - 1)
+    end
+  end
+  
+  def up_right_right(new_row = row, new_column = column)
+    if viable_move?(new_row + 1, new_column + 2)
+      board.highlight_space(new_row + 1, new_column + 2)
+    end
+  end
+  
+  def up_left_left(new_row = row, new_column = column)
+    if viable_move?(new_row + 1, new_column - 2)
+      board.highlight_space(new_row + 1, new_column - 2)
+    end
+  end
+  
+  def down_right_right(new_row = row, new_column = column)
+    if viable_move?(new_row - 1, new_column + 2)
+      board.highlight_space(new_row - 1, new_column + 2)
+    end
+  end
+  
+  def down_left_left(new_row = row, new_column = column)
+    if viable_move?(new_row - 1, new_column - 2)
+      board.highlight_space(new_row - 1, new_column - 2)
     end
   end
 

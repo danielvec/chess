@@ -1,7 +1,8 @@
 # represents a queen chess piece
 class Queen
   attr_reader :player, :board
-  attr_accessor :row, :column, :previous_row, :previous_column
+  attr_accessor :row, :column, :previous_row, :previous_column, :active
+  alias_method :active?, :active
 
   def initialize(player, row, column, board)
     @player = player
@@ -10,6 +11,7 @@ class Queen
     @board = board
     @previous_row = nil
     @previous_column = nil
+    @active = true
   end
 
   def to_s
@@ -18,6 +20,13 @@ class Queen
     elsif player == 2
       " \u265B ".black
     end
+  end
+
+  def moves
+    [method(:move_up), method(:move_right), method(:move_down),
+     method(:move_left), method(:move_up_right),
+     method(:move_up_left), method(:move_down_right),
+     method(:move_down_left)]
   end
 
   def possible_moves
@@ -95,6 +104,10 @@ class Queen
   def update_location(new_row, new_column)
     self.row = new_row
     self.column = new_column
+  end
+
+  def deactivate
+    self.active = false
   end
   
   private

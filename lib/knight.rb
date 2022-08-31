@@ -1,7 +1,8 @@
 # represents a bishop chess piece
 class Knight
   attr_reader :player, :board
-  attr_accessor :row, :column, :previous_row, :previous_column
+  attr_accessor :row, :column, :previous_row, :previous_column, :active
+  alias_method :active?, :active
 
   def initialize(player, row, column, board)
     @player = player
@@ -10,6 +11,7 @@ class Knight
     @board = board
     @previous_row = nil
     @previous_column = nil
+    @active = true
   end
 
   def to_s
@@ -41,6 +43,10 @@ class Knight
   def update_location(new_row, new_column)
     self.row = new_row
     self.column = new_column
+  end
+
+  def deactivate
+    self.active = false
   end
 
   private

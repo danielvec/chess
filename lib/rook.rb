@@ -1,7 +1,8 @@
 # represents a rook chess piece
 class Rook
   attr_reader :player, :board
-  attr_accessor :row, :column, :previous_row, :previous_column
+  attr_accessor :row, :column, :previous_row, :previous_column, :active
+  alias_method :active?, :active
   
   def initialize(player, row, column, board)
     @player = player
@@ -10,6 +11,7 @@ class Rook
     @board = board
     @previous_row = nil
     @previous_column = nil
+    @active = true
   end
 
   def to_s
@@ -18,6 +20,10 @@ class Rook
     elsif player == 2
       " \u265C ".black
     end
+  end
+
+  def moves
+    [method(:move_up), method(:move_right), method(:move_down), method(:move_left)]
   end
 
   def possible_moves
@@ -59,10 +65,14 @@ class Rook
     self.previous_row = row
     self.previous_column = column
   end
-  
+
   def update_location(new_row, new_column)
     self.row = new_row
     self.column = new_column
+  end
+
+  def deactivate
+    self.active = false
   end
 
   private

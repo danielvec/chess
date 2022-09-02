@@ -4,7 +4,7 @@ require 'colorize'
 describe Pawn do
 
   describe "#to_s" do
-    
+
     context 'when player 1' do
     let(:game_board) { double('board') }
     subject(:pawn_display) { described_class.new(1, 2, 2, game_board) }
@@ -29,7 +29,7 @@ describe Pawn do
   end
 
   describe "#move_options" do
-    
+
     let(:game_board) { double('board') }
     subject(:highlight_moves) { described_class.new(1, 2, 2, game_board) }
 
@@ -46,7 +46,7 @@ describe Pawn do
 
     context "when it's the pawn's second move" do
       before do
-        highlight_moves.moves = 1
+        highlight_moves.move_count = 1
         allow(game_board).to receive(:empty_space?).and_return(true)
       end
 
@@ -58,7 +58,7 @@ describe Pawn do
 
     context "when it's the pawn's second move and space in front is empty" do
       before do
-        highlight_moves.moves = 1
+        highlight_moves.move_count = 1
         allow(game_board).to receive(:empty_space?).and_return(false)
       end
 
@@ -116,18 +116,18 @@ describe Pawn do
   end
 
   describe "#adjust_move_count" do
-    
+
     let(:game_board) { double('board') }
     subject(:adjust_moves) { described_class.new(1, 2, 2, game_board) }
 
     before do
-      adjust_moves.moves = 3
+      adjust_moves.move_count = 3
       change = -2
       adjust_moves.adjust_move_count(change)
     end
 
     it 'adjusts moves to 1' do
-      moves = adjust_moves.moves
+      moves = adjust_moves.move_count
       expect(moves).to eq(1)
     end
   end

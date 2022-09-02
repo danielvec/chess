@@ -69,33 +69,36 @@ describe Pawn do
     end
   end
 
-  describe "#capture_options" do
-    
+  describe "#capture_left" do
+
     let(:game_board) { double('board') }
     subject(:highlight_captures) { described_class.new(1, 7, 2, game_board) }
 
-    context "when there is an opponent piece one space forward diagonally" do
+    context "when there is an opponent piece one space forward diagonal left" do
       before do
-        allow(game_board).to receive(:piece_color).with(6, 1).and_return("white")
-        allow(game_board).to receive(:piece_color).with(6, 3).and_return("black")
+        allow(game_board).to receive(:piece_color).with(6, 1).and_return("black")
       end
 
       it 'sends highlight space to board once' do
         expect(game_board).to receive(:highlight_space).once
-        highlight_captures.capture_options(-1)
+        highlight_captures.capture_left(-1)
       end
     end
+  end
 
+  describe "#capture_right" do
 
-    context "when there are two opponent pieces one space forward diagonally" do
+    let(:game_board) { double('board') }
+    subject(:highlight_captures) { described_class.new(1, 7, 2, game_board) }
+
+    context "when there is one opponent piece one space forward diagonal right" do
       before do
-        allow(game_board).to receive(:piece_color).with(6, 1).and_return("black")
         allow(game_board).to receive(:piece_color).with(6, 3).and_return("black")
       end
 
       it 'sends highlight space to board twice' do
-        expect(game_board).to receive(:highlight_space).twice
-        highlight_captures.capture_options(-1)
+        expect(game_board).to receive(:highlight_space).once
+        highlight_captures.capture_right(-1)
       end
     end
   end

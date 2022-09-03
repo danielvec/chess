@@ -136,7 +136,7 @@ describe Pawn do
   end
 
   describe "#update_location" do
-    
+
     let(:game_board) { double('board') }
     subject(:pawn_update) { described_class.new(1, 2, 2, game_board) }
 
@@ -151,7 +151,7 @@ describe Pawn do
   end
 
   describe "#deactivate" do
-    
+
     let(:game_board) { double('board') }
     subject(:pawn_deactive) { described_class.new(1, 2, 2, game_board) }
 

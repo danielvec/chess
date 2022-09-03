@@ -28,7 +28,7 @@ describe Knight do
     end
   end
 
-  describe "#move" do
+  describe "up_up_right" do
     
     let(:game_board) { double('board') }
     subject(:highlight_moves) { described_class.new(1, 8, 2, game_board) }
@@ -36,23 +36,146 @@ describe Knight do
     context "when the game begins" do
       before do
         allow(game_board).to receive(:valid_space?).and_return(true)
-      end
-
-      it 'sends highlight space to board to move [-2, 1]' do
-        row_direction = -2
-        column_direction = 1
         allow(game_board).to receive(:empty_space?).and_return(true)
-        expect(game_board).to receive(:highlight_space).once
-        highlight_moves.move(row_direction, column_direction)
+        allow(highlight_moves).to receive(:opponent_piece?).and_return(false)
       end
 
-      it 'does not send highlight space to board to move [2, 1]' do
-        row_direction = 2
-        column_direction = 1
+      it 'sends highlight space to board once' do
+        expect(game_board).to receive(:highlight_space).once
+        highlight_moves.up_up_right
+      end
+    end
+  end
+
+  describe "#up_up_left" do
+    
+    let(:game_board) { double('board') }
+    subject(:highlight_moves) { described_class.new(1, 8, 2, game_board) }
+
+    context "when the game begins" do
+      before do
+        allow(game_board).to receive(:valid_space?).and_return(true)
+        allow(game_board).to receive(:empty_space?).and_return(true)
+        allow(highlight_moves).to receive(:opponent_piece?).and_return(false)
+      end
+
+      it 'sends highlight space to board once' do
+        expect(game_board).to receive(:highlight_space).once
+        highlight_moves.up_up_left
+      end
+    end
+  end
+
+  describe "#down_down_right" do
+    
+    let(:game_board) { double('board') }
+    subject(:highlight_moves) { described_class.new(1, 8, 2, game_board) }
+
+    context "when the game begins" do
+      before do
+        allow(game_board).to receive(:valid_space?).and_return(false)
         allow(game_board).to receive(:empty_space?).and_return(false)
         allow(highlight_moves).to receive(:opponent_piece?).and_return(false)
+      end
+
+      it 'does not send highlight space to board' do
         expect(game_board).to_not receive(:highlight_space)
-        highlight_moves.move(row_direction, column_direction)
+        highlight_moves.down_down_right
+      end
+    end
+  end
+
+  describe "#down_down_left" do
+    
+    let(:game_board) { double('board') }
+    subject(:highlight_moves) { described_class.new(1, 8, 2, game_board) }
+
+    context "when the game begins" do
+      before do
+        allow(game_board).to receive(:valid_space?).and_return(false)
+        allow(game_board).to receive(:empty_space?).and_return(false)
+        allow(highlight_moves).to receive(:opponent_piece?).and_return(false)
+      end
+
+      it 'does not send highlight space to board' do
+        expect(game_board).to_not receive(:highlight_space)
+        highlight_moves.down_down_left
+      end
+    end
+  end
+
+  describe "#up_right_right" do
+    
+    let(:game_board) { double('board') }
+    subject(:highlight_moves) { described_class.new(1, 8, 2, game_board) }
+
+    context "when the game begins" do
+      before do
+        allow(game_board).to receive(:valid_space?).and_return(true)
+        allow(game_board).to receive(:empty_space?).and_return(false)
+        allow(highlight_moves).to receive(:opponent_piece?).and_return(false)
+      end
+
+      it 'does not send highlight space to board' do
+        expect(game_board).to_not receive(:highlight_space)
+        highlight_moves.up_right_right
+      end
+    end
+  end
+
+  describe "#up_left_left" do
+    
+    let(:game_board) { double('board') }
+    subject(:highlight_moves) { described_class.new(1, 8, 2, game_board) }
+
+    context "when the game begins" do
+      before do
+        allow(game_board).to receive(:valid_space?).and_return(false)
+        allow(game_board).to receive(:empty_space?).and_return(false)
+        allow(highlight_moves).to receive(:opponent_piece?).and_return(false)
+      end
+
+      it 'does not send highlight space to board' do
+        expect(game_board).to_not receive(:highlight_space)
+        highlight_moves.up_left_left
+      end
+    end
+  end
+
+  describe "#down_right_right" do
+    
+    let(:game_board) { double('board') }
+    subject(:highlight_moves) { described_class.new(1, 8, 2, game_board) }
+
+    context "when the game begins" do
+      before do
+        allow(game_board).to receive(:valid_space?).and_return(false)
+        allow(game_board).to receive(:empty_space?).and_return(false)
+        allow(highlight_moves).to receive(:opponent_piece?).and_return(false)
+      end
+
+      it 'does not send highlight space to board' do
+        expect(game_board).to_not receive(:highlight_space)
+        highlight_moves.down_right_right
+      end
+    end
+  end
+
+  describe "#down_left_left" do
+  
+    let(:game_board) { double('board') }
+    subject(:highlight_moves) { described_class.new(1, 8, 2, game_board) }
+
+    context "when the game begins" do
+      before do
+        allow(game_board).to receive(:valid_space?).and_return(false)
+        allow(game_board).to receive(:empty_space?).and_return(false)
+        allow(highlight_moves).to receive(:opponent_piece?).and_return(false)
+      end
+
+      it 'does not send highlight space to board' do
+        expect(game_board).to_not receive(:highlight_space)
+        highlight_moves.down_left_left
       end
     end
   end

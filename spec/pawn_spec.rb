@@ -149,4 +149,19 @@ describe Pawn do
       expect(row).to eq(3)
     end
   end
+
+  describe "#deactivate" do
+    
+    let(:game_board) { double('board') }
+    subject(:pawn_deactive) { described_class.new(1, 2, 2, game_board) }
+
+    before do
+      pawn_deactive.deactivate
+    end
+
+    it 'changes active to false' do
+      active = pawn_deactive.active
+      expect(active).to be false
+    end
+  end
 end

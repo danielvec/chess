@@ -1,7 +1,8 @@
 # represents a pawn chess piece
 class Pawn
   attr_reader :player, :board
-  attr_accessor :move_count, :row, :column, :previous_row, :previous_column, :active
+  attr_accessor :move_count, :row, :column, :previous_row, :previous_column, 
+                :active, :en_passant
   alias_method :active?, :active
 
   def initialize(player, row, column, board)
@@ -13,6 +14,7 @@ class Pawn
     @previous_row = nil
     @previous_column = nil
     @active = true
+    @en_passant = false
   end
 
   def to_s
@@ -67,13 +69,19 @@ class Pawn
   end
 
   def capture_left(direction)
-    if column > 1 && board.piece_color(row + direction, column - 1) == opponent_color
+    if en_passant_capture?(row, column - 1)
+      board.highlight_space(row, column - 1)
+    end
+    if board.piece_color(row + direction, column - 1) == opponent_color
       board.highlight_space(row + direction, column - 1)
     end
   end
 
   def capture_right(direction)
-    if column < 8 && board.piece_color(row + direction, column + 1) == opponent_color
+    if en_passant_capture?(row, column + 1)
+      board.highlight_space(row, column + 1)
+    end
+    if board.piece_color(row + direction, column + 1) == opponent_color
       board.highlight_space(row + direction, column + 1)
     end
   end
@@ -104,6 +112,18 @@ class Pawn
       "black"
     elsif player == 2
       "white"
+    end
+  end
+
+  def en_passant_capture?(row, column)
+    if player == 1
+      if defined? board.selected_piece(2, row, column).en_passant
+        board.selected_piece(2, row, column).en_passant
+      end
+    elsif player == 2
+      if defined? board.selected_piece(1, row, column).en_passant
+        board.selected_piece(1, row, column).en_passant
+      end
     end
   end
 end

@@ -139,6 +139,7 @@ class Board
     board[piece.row][piece.column] = "   "
     board[row][column] = "#{piece}"
     piece.update_location(row, column)
+    update_en_passant(piece)
   end
 
   def undo_move(piece)
@@ -177,6 +178,12 @@ class Board
   def highlight_white_moves(pieces = 16)
     (0..(pieces - 1)).each do |i|
       white_pieces[i].possible_moves if white_pieces[i].active?
+    end
+  end
+
+  def update_en_passant(piece)
+    if (piece.is_a? Pawn) && (piece.row - piece.previous_row).abs == 2
+      piece.en_passant = true
     end
   end
 end

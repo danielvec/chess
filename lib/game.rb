@@ -20,6 +20,7 @@ class Game
     piece = piece_selection(@player_one, 1)
     display_moves(piece)
     move_selection(piece)
+    disable_en_passant(1)
     into_check(piece, 1) if white_check?
     @board.color_board
     @board.display_board
@@ -31,6 +32,7 @@ class Game
     piece = piece_selection(@player_two, 2)
     display_moves(piece)
     move_selection(piece)
+    disable_en_passant(2)
     into_check(piece, 2) if black_check?
     @board.color_board
     @board.display_board
@@ -118,6 +120,18 @@ class Game
     @board.black_pieces[15]
   end
 
+  def disable_en_passant(player)
+    if player == 1
+      (0..7).each do |i|
+        @board.black_pieces[i].en_passant = false
+      end
+    elsif player == 2
+      (0..7).each do |i|
+        @board.white_pieces[i].en_passant = false
+      end
+    end
+  end
+
   private
 
   def check?(king)
@@ -125,5 +139,5 @@ class Game
   end
 end
 
-#chess = Game.new
-#chess.play_game
+chess = Game.new
+chess.play_game

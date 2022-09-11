@@ -1,10 +1,10 @@
 require 'colorize'
-require_relative 'pawn'
-require_relative 'rook'
-require_relative 'bishop'
-require_relative 'knight'
-require_relative 'queen'
-require_relative 'king'
+require_relative 'pieces/pawn'
+require_relative 'pieces/rook'
+require_relative 'pieces/bishop'
+require_relative 'pieces/knight'
+require_relative 'pieces/queen'
+require_relative 'pieces/king'
 
 #represents a chess board
 class Board
@@ -139,6 +139,7 @@ class Board
     board[piece.row][piece.column] = "   "
     board[row][column] = "#{piece}"
     piece.update_location(row, column)
+    castling(piece)
     update_en_passant(piece)
   end
 
@@ -185,5 +186,27 @@ class Board
     if (piece.is_a? Pawn) && (piece.row - piece.previous_row).abs == 2
       piece.en_passant = true
     end
+  end
+
+  def castling(piece)
+    if (piece.is_a? King) && (piece.column - piece.previous_column).abs == 2
+      move_piece(castling_rook(piece), piece.row, castling_column(piece))
+    end
+  end
+
+  def castling_rook(king)
+    if king.column == 3 && king.row == 8
+      white_pieces[8]
+    elsif king.column == 7 && king.row == 8
+      white_pieces[9]
+    elsif king.column == 3 && king.row == 1
+      black_pieces[8]
+    elsif king.column == 7 && king.row == 1
+      black_pieces[9]
+    end
+  end
+
+  def castling_column(king)
+    (king.column + king.previous_column) / 2
   end
 end

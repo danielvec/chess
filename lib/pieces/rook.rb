@@ -25,28 +25,28 @@ class Rook < Piece
   end
 
   def move_up(new_row = row, new_column = column)
-    if board.empty_space?(new_row - 1, new_column) || opponent_piece?(new_row - 1, new_column)
+    if viable_move?(new_row - 1, new_column)
       board.highlight_space(new_row - 1, new_column)
       move_up(new_row - 1) unless opponent_piece?(new_row - 1, new_column)
     end
   end
 
   def move_down(new_row = row, new_column = column)
-    if board.empty_space?(new_row + 1, new_column) || opponent_piece?(new_row + 1, new_column)
+    if viable_move?(new_row + 1, new_column)
       board.highlight_space(new_row + 1, new_column)
       move_down(new_row + 1) unless opponent_piece?(new_row + 1, new_column)
     end
   end
 
   def move_right(new_row = row, new_column = column)
-    if board.empty_space?(new_row, new_column + 1) || opponent_piece?(new_row, new_column + 1)
+    if viable_move?(new_row, new_column + 1)
       board.highlight_space(new_row, new_column + 1)
       move_right(new_row, new_column + 1) unless opponent_piece?(new_row, new_column + 1)
     end
   end
 
   def move_left(new_row = row, new_column = column)
-    if board.empty_space?(new_row, new_column - 1) || opponent_piece?(new_row, new_column - 1)
+    if viable_move?(new_row, new_column - 1)
       board.highlight_space(new_row, new_column - 1)
       move_left(new_row, new_column - 1) unless opponent_piece?(new_row, new_column - 1)
     end
@@ -55,5 +55,12 @@ class Rook < Piece
   def update_location(new_row, new_column)
     super
     self.move_count += 1
+  end
+
+  private
+
+  def viable_move?(row, column)
+    board.valid_space?(row, column) &&
+      (board.empty_space?(row, column) || opponent_piece?(row, column))
   end
 end

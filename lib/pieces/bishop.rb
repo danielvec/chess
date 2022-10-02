@@ -20,30 +20,37 @@ class Bishop < Piece
   end
   
   def move_up_right(new_row = row, new_column = column)
-    if board.empty_space?(new_row - 1, new_column + 1) || opponent_piece?(new_row - 1, new_column + 1)
+    if viable_move?(new_row - 1, new_column + 1)
       board.highlight_space(new_row - 1, new_column + 1)
       move_up_right(new_row - 1, new_column + 1) unless opponent_piece?(new_row - 1, new_column + 1)
     end
   end
   
   def move_up_left(new_row = row, new_column = column)
-    if board.empty_space?(new_row - 1, new_column - 1) || opponent_piece?(new_row - 1, new_column - 1)
+    if viable_move?(new_row - 1, new_column - 1)
       board.highlight_space(new_row - 1, new_column - 1)
       move_up_left(new_row - 1, new_column - 1) unless opponent_piece?(new_row - 1, new_column - 1)
     end
   end
   
   def move_down_right(new_row = row, new_column = column)
-    if board.empty_space?(new_row + 1, new_column + 1) || opponent_piece?(new_row + 1, new_column + 1)
+    if viable_move?(new_row + 1, new_column + 1)
       board.highlight_space(new_row + 1, new_column + 1)
       move_down_right(new_row + 1, new_column + 1) unless opponent_piece?(new_row + 1, new_column + 1)
     end
   end
   
   def move_down_left(new_row = row, new_column = column)
-    if board.empty_space?(new_row + 1, new_column - 1) || opponent_piece?(new_row + 1, new_column - 1)
+    if viable_move?(new_row + 1, new_column - 1)
       board.highlight_space(new_row + 1, new_column - 1)
       move_down_left(new_row + 1, new_column - 1) unless opponent_piece?(new_row + 1, new_column - 1)
     end
+  end
+
+  private
+
+  def viable_move?(row, column)
+    board.valid_space?(row, column) &&
+      (board.empty_space?(row, column) || opponent_piece?(row, column))
   end
 end

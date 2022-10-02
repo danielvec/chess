@@ -33,6 +33,14 @@ class Piece
 
   def deactivate
     self.active = false
+    self.row = nil
+    self.column = nil
+  end
+
+  def activate(row, column)
+    self.active = true
+    self.row = row
+    self.column = column
   end
   
   private

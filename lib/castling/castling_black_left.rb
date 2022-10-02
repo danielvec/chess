@@ -14,10 +14,10 @@ class CastlingBlackLeft < Castling
   end
 
   def king
-    board.black_pieces[15]
+    board.black_pieces[board.black_pieces.length - 1]
   end
 
   def rook
-    board.black_pieces[8]
+    board.black_pieces[board.black_pieces.length - 8]
   end
 end

@@ -1,16 +1,20 @@
+require 'yaml'
+require_relative 'save'
 require_relative 'board'
 
 #represents a player of chess
 class Player
   attr_reader :color
 
-  def initialize(color, board = Board.new)
+  def initialize(color, board, save = Save.new(board))
     @color = color
     @board = board
+    @save = save
   end
 
   def choose_piece
     loop do
+      puts "Type 'E' to exit. Type 'S' to save."
       puts "Choose the piece you would like to move, letter then number, e.g., B2"
       row, column = select_square
       return row, column if valid_piece?(row, column)
@@ -24,6 +28,8 @@ class Player
       user_input = gets.capitalize.chomp
       validated_input = validate_input(user_input)
       return validated_input if validated_input
+      exit if user_input == 'E'
+      @save.save_game(user) if user_input == 'S'
 
       puts "Input Error!"
     end

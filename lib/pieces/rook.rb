@@ -52,6 +52,10 @@ class Rook < Piece
     end
   end
 
+  def adjust_move_count(change)
+    self.move_count += change
+  end
+  
   def update_location(new_row, new_column)
     super
     self.move_count += 1

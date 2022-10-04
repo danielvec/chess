@@ -38,7 +38,7 @@ describe Checkmate do
       allow(end_game).to receive(:path_to_king)
       allow(end_game).to receive(:highlighted_spaces)
       allow(game_board).to receive(:color_board)
-      allow(end_game).to receive(:potential_moves).with(15)
+      allow(end_game).to receive(:potential_blocking_moves)
     end
 
     context 'when player can block attacker' do

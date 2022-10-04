@@ -24,7 +24,7 @@ class Checkmate
     path_to_king
     opponent_path = highlighted_spaces
     @board.color_board
-    potential_moves(15)
+    potential_blocking_moves
     player_moves = highlighted_spaces
     (opponent_path & player_moves).any?
   end
@@ -37,11 +37,19 @@ class Checkmate
     end
   end
 
-  def potential_moves(pieces = 16)
+  def potential_moves
     if player == 1
-      @board.highlight_white_moves(pieces)
+      @board.highlight_white_moves
     elsif player == 2
-      @board.highlight_black_moves(pieces)
+      @board.highlight_black_moves
+    end
+  end
+
+  def potential_blocking_moves
+    if player == 1
+      @board.highlight_white_moves(@board.white_pieces.length - 1)
+    elsif player == 2
+      @board.highlight_black_moves(@board.black_pieces.length - 1)
     end
   end
 

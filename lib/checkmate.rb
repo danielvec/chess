@@ -70,9 +70,9 @@ class Checkmate
   def king_moves
     @board.color_board
     if player == 1
-      @board.white_pieces[15].possible_moves
+      @board.white_pieces[@board.white_pieces.length - 1].possible_moves
     elsif player == 2
-      @board.black_pieces[15].possible_moves
+      @board.black_pieces[@board.black_pieces.length - 1].possible_moves
     end
     highlighted_spaces
   end

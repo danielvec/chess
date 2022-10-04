@@ -35,8 +35,7 @@ describe Bishop do
 
     context "when the game begins" do
       before do
-        allow(game_board).to receive(:empty_space?).and_return(false)
-        allow(highlight_moves).to receive(:opponent_piece?).and_return(false)
+        allow(highlight_moves).to receive(:viable_move?).and_return(false)
       end
 
       it 'does not send highlight space to board' do
@@ -47,7 +46,7 @@ describe Bishop do
 
     context "when there are 3 empty spaces in front and then an opponent piece" do
       before do
-        allow(game_board).to receive(:empty_space?).and_return(true, true, true, false)
+        allow(highlight_moves).to receive(:viable_move?).and_return(true, true, true, true)
         allow(highlight_moves).to receive(:opponent_piece?).and_return(false, false, false, true)
       end
 
@@ -65,7 +64,7 @@ describe Bishop do
 
     context "when the game begins" do
       before do
-        allow(game_board).to receive(:empty_space?).and_return(false)
+        allow(highlight_moves).to receive(:viable_move?).and_return(false)
         allow(highlight_moves).to receive(:opponent_piece?).and_return(false)
       end
 
@@ -77,7 +76,7 @@ describe Bishop do
 
     context "when there are 2 empty spaces in front and then an opponent piece" do
       before do
-        allow(game_board).to receive(:empty_space?).and_return(true, true, false)
+        allow(highlight_moves).to receive(:viable_move?).and_return(true, true, true)
         allow(highlight_moves).to receive(:opponent_piece?).and_return(false, false, true)
       end
 
@@ -95,7 +94,7 @@ describe Bishop do
 
     context "when the game begins" do
       before do
-        allow(game_board).to receive(:empty_space?).and_return(false)
+        allow(highlight_moves).to receive(:viable_move?).and_return(false)
         allow(highlight_moves).to receive(:opponent_piece?).and_return(false)
       end
 
@@ -107,7 +106,7 @@ describe Bishop do
 
     context "when there is 1 empty space in front and then an opponent piece" do
       before do
-        allow(game_board).to receive(:empty_space?).and_return(true, false)
+        allow(highlight_moves).to receive(:viable_move?).and_return(true, true)
         allow(highlight_moves).to receive(:opponent_piece?).and_return(false, true)
       end
 
@@ -125,7 +124,7 @@ describe Bishop do
 
     context "when the game begins" do
       before do
-        allow(game_board).to receive(:empty_space?).and_return(false)
+        allow(highlight_moves).to receive(:viable_move?).and_return(false)
         allow(highlight_moves).to receive(:opponent_piece?).and_return(false)
       end
 
@@ -137,7 +136,7 @@ describe Bishop do
 
     context "when there are 3 empty spaces in front and then an opponent piece" do
       before do
-        allow(game_board).to receive(:empty_space?).and_return(true, true, true, false)
+        allow(highlight_moves).to receive(:viable_move?).and_return(true, true, true, true)
         allow(highlight_moves).to receive(:opponent_piece?).and_return(false, false, false, true)
       end
 

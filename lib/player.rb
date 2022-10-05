@@ -36,7 +36,7 @@ class Player
   end
 
   def validate_input(input)
-    column = input.split('')[0].ord - 64
+    column = input.empty? ? 9 : input.split('')[0].ord - 64
     row = (input.split('')[1].to_i - 9).abs
     return row, column if column.between?(1, 8) && row.between?(1, 8)
   end

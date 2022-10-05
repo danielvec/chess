@@ -12,18 +12,18 @@ class Player
     @save = save
   end
 
-  def choose_piece
+  def choose_piece(user)
     loop do
       puts "Type 'E' to exit. Type 'S' to save."
       puts "Choose the piece you would like to move, letter then number, e.g., B2"
-      row, column = select_square
+      row, column = select_square(user)
       return row, column if valid_piece?(row, column)
 
       puts "Not a valid piece!"
     end
   end
 
-  def select_square
+  def select_square(user)
     loop do
       user_input = gets.capitalize.chomp
       validated_input = validate_input(user_input)
@@ -41,10 +41,10 @@ class Player
     return row, column if column.between?(1, 8) && row.between?(1, 8)
   end
 
-  def move_piece
+  def move_piece(user)
     loop do
       puts "Select the space you would like to move to"
-      row, column = select_square
+      row, column = select_square(user)
       return row, column if @board.valid_move?(row, column)
 
       puts "Invalid move!"

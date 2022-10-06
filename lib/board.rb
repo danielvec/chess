@@ -120,15 +120,10 @@ class Board
   end
 
   def selected_piece(player, row, column)
-    (0..15).each do |i|
-      if player == 1
-        if white_pieces[i].row == row && white_pieces[i].column == column
-          return white_pieces[i]
-        end
-      elsif player == 2
-        if black_pieces[i].row == row && black_pieces[i].column == column
-          return black_pieces[i]
-        end
+    pieces = player == 1 ? white_pieces : black_pieces
+    (0...pieces.length).each do |i|
+      if pieces[i].row == row && pieces[i].column == column
+        return pieces[i]
       end
     end
   end
@@ -174,13 +169,17 @@ class Board
     board[row][column].include? "   "
   end
 
-  def highlight_black_moves(pieces = 16)
+  def remove_piece(row, column)
+    board[row][column] = "   "
+  end
+
+  def highlight_black_moves(pieces = black_pieces.length)
     (0..(pieces - 1)).each do |i|
       black_pieces[i].possible_moves if black_pieces[i].active?
     end
   end
 
-  def highlight_white_moves(pieces = 16)
+  def highlight_white_moves(pieces = white_pieces.length)
     (0..(pieces - 1)).each do |i|
       white_pieces[i].possible_moves if white_pieces[i].active?
     end
@@ -200,13 +199,13 @@ class Board
 
   def castling_rook(king)
     if king.column == 3 && king.row == 8
-      white_pieces[8]
+      white_pieces[white_pieces.length - 8]
     elsif king.column == 7 && king.row == 8
-      white_pieces[9]
+      white_pieces[white_pieces.length - 7]
     elsif king.column == 3 && king.row == 1
-      black_pieces[8]
+      black_pieces[black_pieces.length - 8]
     elsif king.column == 7 && king.row == 1
-      black_pieces[9]
+      black_pieces[black_pieces.length - 7]
     end
   end
 

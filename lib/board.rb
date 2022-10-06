@@ -36,13 +36,17 @@ class Board
   def color_board
     (1..8).each do |column|
       (1..8).each do |row|
-        board[row][column] = if row.odd? && column.even? || row.even? && column.odd?
-                               board[row][column].on_light_blue
-                             else
-                               board[row][column].on_blue
-                             end
+        color_square(row, column)
       end
     end 
+  end
+
+  def color_square(row, column)
+    board[row][column] = if row.odd? && column.even? || row.even? && column.odd?
+                          board[row][column].on_light_blue
+                         else
+                          board[row][column].on_blue
+                         end
   end
 
   def display_board

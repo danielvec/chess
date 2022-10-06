@@ -105,16 +105,6 @@ class Game
     board.move_piece(selected_piece, chosen_space[0], chosen_space[1])
   end
 
-  def into_check(selected_piece, player)
-    puts "Puts king into check. Invalid Move"
-    board.undo_move(selected_piece)
-    if player == 1
-      player_one_turn
-    elsif player == 2
-      player_two_turn
-    end
-  end
-
   def white_king_attacker
     board.color_board
     (0..15).each do |i|

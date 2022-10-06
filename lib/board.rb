@@ -140,6 +140,7 @@ class Board
     piece.update_location(row, column)
     castling(piece)
     update_en_passant(piece)
+    promotion(piece)
   end
 
   def undo_move(piece)
@@ -195,6 +196,32 @@ class Board
     if (piece.is_a? King) && (piece.column - piece.previous_column).abs == 2
       move_piece(castling_rook(piece), piece.row, castling_column(piece))
     end
+  end
+
+  def promotion(piece)
+    player = piece_color(piece.row, piece.column) == "white" ? 1 : 2
+    if (piece.is_a? Pawn) && (piece.row == 1 || piece.row == 8)
+      promotion_choice(player, piece.row, piece.column)
+      piece.deactivate
+    end
+  end
+
+  def promotion_choice(player, row, column)
+    puts "Enter 'Q' for Queen, 'R' for Rook, 'K' for Knight, or 'B' for Bishop"
+    choice = gets.chomp
+    player_pieces = player == 1 ? @white_pieces : @black_pieces
+    case choice.upcase
+    when 'Q'
+      player_pieces.unshift(Queen.new(player, row, column, self))
+    when 'R'
+      player_pieces.unshift(Rook.new(player, row, column, self))
+    when 'K'
+      player_pieces.unshift(Knight.new(player, row, column, self))
+    when 'B'
+      player_pieces.unshift(Bishop.new(player, row, column, self))
+    else promotion_choice(player, row, column)
+    end
+    board[row][column] = "#{player_pieces[0]}"
   end
 
   def castling_rook(king)

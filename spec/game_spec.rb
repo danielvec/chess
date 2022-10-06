@@ -76,19 +76,26 @@ describe Game do
 
   describe '#display_moves' do
     let(:game_board) { instance_double(Board) }
-    let(:piece) { instance_double(King) }
+    let(:piece) { instance_double(Queen) }
+    let(:king) { instance_double(King) }
     subject(:move_display) { described_class.new(game_board) }
+
+    before do
+      allow(move_display).to receive(:castling_moves)
+      allow(move_display).to receive(:invalidate_moves)
+      allow(move_display).to receive(:white_king)
+    end
 
     it 'sends possible_move to selected piece' do
       allow(game_board).to receive(:display_board)
       expect(piece).to receive(:possible_moves)
-      move_display.display_moves(piece)
+      move_display.display_moves(piece, 1)
     end
 
     it 'sends display_board to board' do
       allow(piece).to receive(:possible_moves)
       expect(game_board).to receive(:display_board)
-      move_display.display_moves(piece)
+      move_display.display_moves(piece, 1)
     end
   end
 

@@ -51,8 +51,92 @@ class Game
     checkmate = verify_checkmate(player)
     if checkmate.game_over?
       puts "Checkmate. Player #{opponent} wins."
+      exit
     else
       puts "CHECK"
+    end
+  end
+
+  def invalidate_moves(piece, king, player)
+    invalid_moves = []
+    piece_moves = valid_moves#
+    board.remove_piece(piece.row, piece.column)#
+    until piece_moves.empty?
+      row = piece_moves[0][0]
+      column = piece_moves[0][1]
+      current_piece = active_piece(row, column, king)#
+      deactivate_piece(current_piece)#
+      board.board[row][column] = "#{piece}"
+      board.color_board
+      if piece.is_a? King
+        king == black_king ? board.highlight_white_moves : board.highlight_black_moves
+        invalid_moves << [row, column] if board.valid_move?(row, column)
+      else
+        invalid_moves << [row, column] if player_check?(player)#
+      end
+      board.remove_piece(row, column)
+      reactivate_piece(row, column, current_piece)#
+      piece_moves.delete_at 0
+    end
+    board.board[piece.row][piece.column] = "#{piece}"
+    board.color_board
+    potential_moves(piece, player)
+    unhighlight_moves(invalid_moves)
+    valid_moves
+  end
+
+  def any_valid_moves?(king, player)
+    board.color_board
+    pieces = king == white_king ? board.white_pieces : board.black_pieces
+    (0...pieces.length).each do |i|
+      if pieces[i].active?
+        return true unless invalidate_moves(pieces[i], king, player).empty?
+      end
+    end
+    return false
+  end
+
+  def deactivate_piece(piece)
+    if piece.respond_to?(:update_location)
+      piece.deactivate
+    end
+  end
+
+  def reactivate_piece(row, column, piece)
+    if piece.respond_to?(:update_location)
+      piece.activate(row, column)
+      board.board[row][column] = "#{piece}"
+    end
+  end
+
+  def potential_moves(piece, player)
+    castling_moves(piece, player) if piece.is_a? King
+    piece.possible_moves
+  end
+
+  def active_piece(row, column, king)
+    pieces = king == black_king ? board.white_pieces : board.black_pieces
+    (0...pieces.length).each do |i|
+      if pieces[i].row == row && pieces[i].column == column
+        return pieces[i]
+      end
+    end
+  end
+
+  def player_check?(player)
+    board.color_board
+    if player == 1
+      white_check?
+    else
+      black_check?
+    end
+  end
+
+  def unhighlight_moves(moves)
+    for i in 0...moves.length
+      row = moves[i][0]
+      column = moves[i][1]
+      board.color_square(row, column)
     end
   end
 

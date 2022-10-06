@@ -76,7 +76,7 @@ class Game
 
   def piece_selection(player, user)
     board.color_board
-    chosen_piece = player.choose_piece
+    chosen_piece = player.choose_piece(user)
     board.selected_piece(user, chosen_piece[0], chosen_piece[1])
   end
 
@@ -100,8 +100,8 @@ class Game
     end
   end
 
-  def move_selection(selected_piece)
-    chosen_space = @player_one.move_piece
+  def move_selection(player, selected_piece, user)
+    chosen_space = player.move_piece(user)
     board.move_piece(selected_piece, chosen_space[0], chosen_space[1])
   end
 

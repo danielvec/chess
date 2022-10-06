@@ -1,6 +1,7 @@
 require_relative 'board'
 require_relative 'player'
 require_relative 'checkmate'
+require_relative 'save'
 require_relative 'castling/castling_white_left'
 require_relative 'castling/castling_white_right'
 require_relative 'castling/castling_black_left'
@@ -9,8 +10,9 @@ require_relative 'castling/castling_black_right'
 class Game
   attr_accessor :board
 
-  def initialize(board = Board.new, player_one = Player.new("white", board), player_two = Player.new("black", board))
+  def initialize(board = Board.new, save = Save.new(board), player_one = Player.new("white", board), player_two = Player.new("black", board))
     @board = board
+    @save = save
     @player_one = player_one
     @player_two = player_two
   end
@@ -153,6 +155,28 @@ class Game
     end
   end
 
+  def intro
+    puts "Type 'L' to load game or 'N' for new game"
+    input = gets.capitalize.chomp
+    if input == 'N'
+      play_game
+    elsif input == 'L'
+      load_game
+    else
+      puts "Input Error"
+      intro
+    end
+  end
+
+  def load_game
+    @save.load_game
+    if @save.load_game == 1
+      player_one_turn
+    else
+      player_two_turn
+    end
+  end
+
   private
 
   def check?(king)
@@ -161,4 +185,4 @@ class Game
 end
 
 chess = Game.new
-chess.play_game
+chess.intro

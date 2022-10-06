@@ -74,6 +74,29 @@ class Game
     check?(black_king)
   end
 
+  def no_moves(player)
+    puts "Selected piece has no valid moves."
+    if player == 1
+      player_one_turn
+    elsif player == 2
+      player_two_turn
+    end
+  end
+
+  def valid_moves?(player)
+    !valid_moves.empty?
+  end
+
+  def valid_moves
+    valid_spaces = []
+    (1..8).each do |column|
+      (1..8).each do |row|
+        valid_spaces << [row, column] if board.valid_move?(row, column)
+      end
+    end
+    valid_spaces
+  end
+
   def piece_selection(player, user)
     board.color_board
     chosen_piece = player.choose_piece(user)

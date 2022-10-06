@@ -24,24 +24,52 @@ class Game
   end
 
   def player_one_turn
-    in_check(1, 2) if white_check?
+    if white_check?
+      if !any_valid_moves?(white_king, 1)
+        puts "Checkmate."
+        exit
+      end
+      in_check(1, 2)
+    else
+      board.color_board
+      board.highlight_white_moves
+      if !any_valid_moves?(white_king, 1)
+        puts "Stalemate."
+        exit
+      end
+    end
+    board.color_board
     piece = piece_selection(@player_one, 1)
     display_moves(piece, 1)
-    move_selection(piece)
+    no_moves(1) if !valid_moves?(1)
+    move_selection(@player_one, piece, 1)
     disable_en_passant(1)
-    into_check(piece, 1) if white_check?
     board.color_board
     board.display_board
     player_two_turn
   end
 
   def player_two_turn
-    in_check(2, 1) if black_check?
+    if black_check?
+      if !any_valid_moves?(black_king, 2)
+        puts "Checkmate."
+        exit
+      end
+      in_check(2, 1)
+    else
+      board.color_board
+      board.highlight_black_moves
+      if !any_valid_moves?(black_king, 2)
+        puts "Stalemate."
+        exit
+      end
+    end
+    board.color_board
     piece = piece_selection(@player_two, 2)
     display_moves(piece, 2)
-    move_selection(piece)
+    no_moves(2) if !valid_moves?(2)
+    move_selection(@player_two, piece, 2)
     disable_en_passant(2)
-    into_check(piece, 2) if black_check?
     board.color_board
     board.display_board
     player_one_turn
@@ -188,8 +216,12 @@ class Game
   end
 
   def display_moves(selected_piece, player)
-    castling_moves(selected_piece, player)
-    selected_piece.possible_moves
+    potential_moves(selected_piece, player)
+    if player == 1
+      invalidate_moves(selected_piece, white_king, player)
+    else
+      invalidate_moves(selected_piece, black_king, player)
+    end
     board.display_board
   end
 

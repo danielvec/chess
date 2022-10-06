@@ -109,36 +109,14 @@ describe Game do
       chosen_space = [8, 5]
       expect(user).to receive(:move_piece).and_return(chosen_space)
       allow(game_board).to receive(:move_piece).with(piece, chosen_space[0], chosen_space[1])
-      select_move.move_selection(piece)
+      select_move.move_selection(user, piece, 1)
     end
 
     it 'sends move_piece to board' do
       chosen_space = [8, 5]
       allow(user).to receive(:move_piece).and_return(chosen_space)
       expect(game_board).to receive(:move_piece)
-      select_move.move_selection(piece)
-    end
-  end
-
-  describe '#into_check' do
-    let(:game_board) { instance_double(Board) }
-    let(:piece) { instance_double(King) }
-    subject(:check) { described_class.new(game_board) }
-
-    before do
-      allow(check).to receive(:puts)
-    end
-
-    it 'sends undo_move to board' do
-      allow(check).to receive(:player_one_turn)
-      expect(game_board).to receive(:undo_move).with(piece)
-      check.into_check(piece, 1)
-    end
-
-    it 'sends player_one_turn' do
-      allow(game_board).to receive(:undo_move).with(piece)
-      allow(check).to receive(:player_one_turn)
-      check.into_check(piece, 1)
+      select_move.move_selection(user, piece, 1)
     end
   end
 end

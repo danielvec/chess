@@ -107,8 +107,8 @@ class Game
 
   def white_king_attacker
     board.color_board
-    (0..15).each do |i|
-      board.black_pieces[i].possible_moves
+    (0...board.black_pieces.length).each do |i|
+      board.black_pieces[i].possible_moves if board.black_pieces[i].active?
       if check?(white_king)
         return board.black_pieces[i]
       end
@@ -117,8 +117,8 @@ class Game
 
   def black_king_attacker
     board.color_board
-    (0..15).each do |i|
-      board.white_pieces[i].possible_moves
+    (0...board.white_pieces.length).each do |i|
+      board.white_pieces[i].possible_moves if board.white_pieces[i].active?
       if check?(black_king)
         return board.white_pieces[i]
       end
@@ -126,21 +126,21 @@ class Game
   end
 
   def white_king
-    board.white_pieces[15]
+    board.white_pieces[board.white_pieces.length - 1]
   end
 
   def black_king
-    board.black_pieces[15]
+    board.black_pieces[board.black_pieces.length - 1]
   end
 
   def disable_en_passant(player)
     if player == 1
-      (0..7).each do |i|
-        board.black_pieces[i].en_passant = false
+      (0..board.black_pieces.length - 1).each do |i|
+        board.black_pieces[i].en_passant = false if defined? board.black_pieces[i].en_passant
       end
     elsif player == 2
-      (0..7).each do |i|
-        board.white_pieces[i].en_passant = false
+      (0..board.white_pieces.length - 1).each do |i|
+        board.white_pieces[i].en_passant = false if defined? board.white_pieces[i].en_passant
       end
     end
   end

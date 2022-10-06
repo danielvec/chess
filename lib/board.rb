@@ -50,11 +50,11 @@ class Board
   end
 
   def display_board
-    puts "captured: #{white_captured}".white.on_light_cyan
+    puts "captured: #{white_captured}".light_white.on_blue
     (0..9).each do |i|
       puts board[i].join('')
     end
-    puts "captured: #{black_captured}".black.on_light_cyan
+    puts "captured: #{black_captured}".black.on_light_blue
   end
 
   def add_pawns

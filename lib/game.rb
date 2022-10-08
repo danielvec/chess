@@ -312,6 +312,3 @@ class Game
     board.valid_move?(king.row, king.column)
   end
 end
-
-chess = Game.new
-chess.intro

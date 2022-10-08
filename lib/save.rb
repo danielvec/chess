@@ -28,6 +28,7 @@ class Save
     @board.black_pieces = saved[:black_pieces]
     @board.white_captured = saved[:white_captured]
     @board.black_captured = saved[:black_captured]
+    @board.color_board
     @board.display_board
     turn
     #if turn == 1

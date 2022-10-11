@@ -118,10 +118,13 @@ class Game
     pieces = king == white_king ? board.white_pieces : board.black_pieces
     (0...pieces.length).each do |i|
       if pieces[i].active?
-        return true unless invalidate_moves(pieces[i], king, player).empty?
+        invalidate_moves(pieces[i], king, player)
+        unless invalidate_moves(pieces[i], king, player) == []
+          return true
+        end
       end
     end
-    return false
+    false
   end
 
   def deactivate_piece(piece)

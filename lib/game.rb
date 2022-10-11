@@ -87,23 +87,23 @@ class Game
 
   def invalidate_moves(piece, king, player)
     invalid_moves = []
-    piece_moves = valid_moves#
-    board.remove_piece(piece.row, piece.column)#
+    piece_moves = valid_moves
+    board.remove_piece(piece.row, piece.column)
     until piece_moves.empty?
       row = piece_moves[0][0]
       column = piece_moves[0][1]
-      current_piece = active_piece(row, column, king)#
-      deactivate_piece(current_piece)#
+      current_piece = active_piece(row, column, king)
+      deactivate_piece(current_piece)
       board.board[row][column] = "#{piece}"
       board.color_board
       if piece.is_a? King
         king == black_king ? board.highlight_white_moves : board.highlight_black_moves
         invalid_moves << [row, column] if board.valid_move?(row, column)
       else
-        invalid_moves << [row, column] if player_check?(player)#
+        invalid_moves << [row, column] if player_check?(player)
       end
       board.remove_piece(row, column)
-      reactivate_piece(row, column, current_piece)#
+      reactivate_piece(row, column, current_piece)
       piece_moves.delete_at 0
     end
     board.board[piece.row][piece.column] = "#{piece}"

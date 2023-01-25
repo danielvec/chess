@@ -15,7 +15,7 @@ Ruby >= 3.1.2
 
 **Installation**  
 `git clone https://github.com/danielvec/chess/`  
-`cd chess`
+`cd chess`  
 `gem install colorize`
 
 ## How to Play
